@@ -78,8 +78,7 @@
             } else if (direction == 'down') {
                 for (let y = 0; y < 21; y++) {
                     for (let x = 0; x < 21; x++) {
-                        if (game_array[y][x] != 0 && game_array[y][x] != 'a' && game_array[y][x] != 'X') {
-                            console.log(y, x);
+                        if (game_array[y][x] != 0 && game_array[y][x] != 'a') {
                             game_array[y][x] = 0
                             document.getElementById(`div_game_game_panel${y}_${x}`).classList.remove('snake')
                             game_array[y + 1][x] = 1
@@ -90,7 +89,7 @@
             } else if (direction == 'left') {
                 for (let y = 0; y < 21; y++) {
                     for (let x = 0; x < 21; x++) {
-                        if (game_array[y][x] != 0 && game_array[y][x] != 'a' && game_array[y][x] != 'X') {
+                        if (game_array[y][x] != 0 && game_array[y][x] != 'a') {
                             game_array[y][x] = 0
                             document.getElementById(`div_game_game_panel${y}_${x}`).classList.remove('snake')
                             game_array[y][x - 1] = 1
@@ -101,7 +100,7 @@
             } else if (direction == 'right') {
                 for (let y = 0; y < 21; y++) {
                     for (let x = 0; x < 21; x++) {
-                        if (game_array[y][x] != 0 && game_array[y][x] != 'a' && game_array[y][x] != 'X') {
+                        if (game_array[y][x] != 0 && game_array[y][x] != 'a') {
                             game_array[y][x] = 0
                             document.getElementById(`div_game_game_panel${y}_${x}`).classList.remove('snake')
                             game_array[y][x + 1] = 1
@@ -109,7 +108,7 @@
                         }
                     }
                 }
-            }  // zamien na tablice objektow z pozycjami ok ok?
+            }
         }, 200);
     </script>
 </body>

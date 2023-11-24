@@ -34,3 +34,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.snake {
+    background-color: green;
+}
