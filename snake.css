@@ -23,7 +23,7 @@ body {
     display: grid;
     grid-template-columns: repeat(21, 1fr);
     grid-template-rows: repeat(21, 1fr);
-    gap: 10px;
+    gap: 3px;
 }
 
 .div_game_panel {
@@ -35,6 +35,15 @@ body {
     justify-content: center;
 }
 
+.snakeHead {
+    background-image: url("snake_head.png");
+    background-size: 100%;
+}
+
 .snake {
     background-color: green;
+}
+
+.apple {
+    background-color: red;
 }

@@ -34,6 +34,8 @@
         let alternate = false
         let mamdosc = {}
         let finished = false
+        let death = false
+        let death2 = false
 
 
         for (let y = 0; y < 21; y++) {
@@ -70,18 +72,15 @@
         console.log(game_data.borderPositions);
         console.log(game_data.snakePositions);
 
-        function wonGame() {
-            if (!alert('Wygrałeś')) { window.location.reload(); }
-        }
-
         function endGame() {
             if (!finished) {
-                if (!alert('Przegrałeś')) { window.location.reload(); }
+                // if (!alert('PRZEGRAŁEŚ XDDDD')) { window.location.reload(); }
                 finished = true
             }
         }
 
         function applePosition() {
+
             game_data.applePosition.x = Math.floor((Math.random() * 19) + 1)
             game_data.applePosition.y = Math.floor((Math.random() * 19) + 1)
             if (document.getElementById(`div_game_panel${game_data.applePosition.x}_${game_data.applePosition.y}`).classList.contains('snake')) {
@@ -92,11 +91,9 @@
         }
 
         function moveSnake(pos, secondpos, calc) {
+
             if (collected) {
                 game_data.snakeLength++
-                if (game_data.snakeLength == 361) {
-                    wonGame()
-                }
                 if (alternate) {
                     game_data.snakePositions[game_data.snakeLength - 1] = {
                         x: lastPos[0],
@@ -116,45 +113,51 @@
                     document.getElementById(`div_game_panel${game_data.snakePositions[i].x}_${game_data.snakePositions[i].y}`).classList.remove('snake')
                 }
 
-                if (game_data.snakePositions[i][pos] + calc == 20 || game_data.snakePositions[i][pos] + calc == 0) {
-                    if (i == 0) {
+                if (i == 0) {
+                    death = false
+                    lastPos = [game_data.snakePositions[0].x, game_data.snakePositions[0].y]
+                    lastPos2 = [game_data.snakePositions[0].x, game_data.snakePositions[0].y]
+                    game_data.snakePositions[0][pos] = game_data.snakePositions[0][pos] + calc
+                    if (document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.contains('snake')) {
+                        console.log("Klasa");
                         clearInterval(startGame)
                         endGame()
+                    } else {
+                        document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.add('snake')
                     }
                 } else {
-                    if (i == 0) {
-                        lastPos = [game_data.snakePositions[0].x, game_data.snakePositions[0].y]
-                        lastPos2 = [game_data.snakePositions[0].x, game_data.snakePositions[0].y]
-                        game_data.snakePositions[0][pos] = game_data.snakePositions[0][pos] + calc
-                        if (document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.contains('snake')) {
-                            clearInterval(startGame)
-                            endGame()
-                        } else {
-                            document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.add('snake')
-                        }
+                    if (alternate) {
+                        lastPos2 = [game_data.snakePositions[i].x, game_data.snakePositions[i].y]
+                        game_data.snakePositions[i].x = lastPos[0]
+                        game_data.snakePositions[i].y = lastPos[1]
+                        alternate = !alternate
                     } else {
-                        if (alternate) {
-                            lastPos2 = [game_data.snakePositions[i].x, game_data.snakePositions[i].y]
-                            game_data.snakePositions[i].x = lastPos[0]
-                            game_data.snakePositions[i].y = lastPos[1]
-                            alternate = !alternate
-                        } else {
-                            lastPos = [game_data.snakePositions[i].x, game_data.snakePositions[i].y]
-                            game_data.snakePositions[i].x = lastPos2[0]
-                            game_data.snakePositions[i].y = lastPos2[1]
-                            alternate = !alternate
-                        }
-
+                        lastPos = [game_data.snakePositions[i].x, game_data.snakePositions[i].y]
+                        game_data.snakePositions[i].x = lastPos2[0]
+                        game_data.snakePositions[i].y = lastPos2[1]
+                        alternate = !alternate
                     }
                 }
-                if (game_data.applePosition.x == game_data.snakePositions[0].x && game_data.applePosition.y == game_data.snakePositions[0].y) {
-                    document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.remove('apple')
-                    collected = true
-
-                    applePosition()
+                if (death && death2) {
+                    console.log("Border");
+                    clearInterval(startGame)
+                    endGame()
                 }
-
+                if (game_data.snakePositions[0][pos] + calc == 20 || game_data.snakePositions[0][pos] + calc == 0) {
+                    if (death) {
+                        death2 = true
+                    }
+                    death = true
+                }
             }
+            if (game_data.applePosition.x == game_data.snakePositions[0].x && game_data.applePosition.y == game_data.snakePositions[0].y) {
+                document.getElementById(`div_game_panel${game_data.snakePositions[0].x}_${game_data.snakePositions[0].y}`).classList.remove('apple')
+                collected = true
+
+                applePosition()
+            }
+
+
         }
 
 
